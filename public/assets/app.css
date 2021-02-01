@@ -1,0 +1,50 @@
+body,html{
+    height: 100%;
+}
+
+#right-side-nav{
+    margin-left: auto;
+}
+#nav-brand-nav{
+    letter-spacing: 5px;
+    font-size: x-large;
+}
+
+#nav-main{
+    opacity: 0.9;
+}
+
+#main-tag-header{
+    color: seashell;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 4px;
+
+}
+
+#main-tag-no-notes{
+    color: rgba(85, 192, 85, 0.849);
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Londrina Solid', cursive;
+    letter-spacing: 4px;
+
+}
+
+#main-tag-line{
+    color: seashell;
+    text-align: center;
+    font-size: 20px;
+}
+
+#app{
+    background-image: url('./img/coverphoto.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+
+    height: 100vh;
+}
+
+

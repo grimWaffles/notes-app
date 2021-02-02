@@ -22,6 +22,15 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav">
                 
+                <li class="nav-item">
+                    <a class="nav-link" href="/notes">Home</a>
+                </li>
+
+                @if (Auth::user())
+                    <li class="nav-item">
+                        <a class="nav-link" href="/notes/create">Create a new note</a>
+                    </li>
+                @endif
                 
             </ul>
         <!-- Right Side Of Navbar -->

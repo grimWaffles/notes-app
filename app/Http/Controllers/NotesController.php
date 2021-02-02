@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Notes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NotesController extends Controller
 {
@@ -16,10 +17,12 @@ class NotesController extends Controller
     public function index()
     {
         if(Auth::User()){
-            $notes=Notes::all();
+            
+            $notes=DB::table('notes')->where('user_id','=',Auth::user()->id)->orderBy('updated_at','desc')->get();
+
+            return view('notes.index')->with('notes',$notes);
         }
 
-        return view('notes.index')->with('notes',$notes);
     }
 
     /**
@@ -39,8 +42,18 @@ class NotesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $note=new Notes();
+        //get inputs from the page
+        $note->body=$request->input('body');
+        $note->title=$request->input('title');
+        $note->user_id=Auth::user()->id;
+
+        //store in db  
+        $note->save();
+
+        //return a view
+        return redirect('/notes');
     }
 
     /**
@@ -51,7 +64,7 @@ class NotesController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -62,7 +75,17 @@ class NotesController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::user()){
+
+            $note=Notes::find($id);
+
+            if($note->user_id === Auth::user()->id){
+                return view('notes.edit')->with('note',$note);
+            }
+            else{
+                return redirect('notes.index');
+            }
+        }
     }
 
     /**
@@ -74,7 +97,17 @@ class NotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Auth::user()){
+            
+            $note=Notes::find($id);
+
+            $note->title=$request->input('title');
+            $note->body=$request->input('body');
+
+            $note->update();
+
+            return redirect('/notes');
+        }
     }
 
     /**
@@ -85,6 +118,13 @@ class NotesController extends Controller
      */
     public function destroy($id)
     {
-        //
+       if(Auth::user()){
+        
+            $note=Notes::find($id);
+
+            $note->delete();
+
+            return redirect('/notes');
+       }
     }
 }
